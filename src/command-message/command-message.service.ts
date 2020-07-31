@@ -9,7 +9,7 @@ import { CommandMessage } from './command-message.interface';
  */
 export function isCommandMessage(commandMessage: unknown): boolean {
   return (
-    commandMessage &&
+    !!commandMessage &&
     typeof commandMessage === 'object' &&
     typeof (commandMessage as CommandMessage).command === 'string'
   );

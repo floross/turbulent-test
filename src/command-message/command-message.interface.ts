@@ -1,4 +1,4 @@
-export interface CommandMessage {
+export interface CommandMessage<T = unknown> {
   command: string;
-  options?: unknown;
+  options?: T;
 }

@@ -1,10 +1,10 @@
 import {
   isCommandMessage,
   parseCommandMessage,
-} from './command-message.service';
-import { ERROR_COMMAND_BAD_REQUEST } from '../constants/error.constant';
+} from '../src/command-message/command-message.service';
+import { ERROR_COMMAND_BAD_REQUEST } from '../src/constants/error.constant';
 
-describe('Command message parser', () => {
+describe('Command message parser Service', () => {
   test('isCommandMessage: assert CommandMessage format', () => {
     // expect to be the CommandMessage format
     expect(isCommandMessage({ command: 'any' })).toBe(true);
@@ -32,7 +32,7 @@ describe('Command message parser', () => {
       Error,
       errorRegex,
     );
-    expect(() => parseCommandMessage(new Buffer('test'))).toThrowWithMessage(
+    expect(() => parseCommandMessage(Buffer.from('test'))).toThrowWithMessage(
       Error,
       errorRegex,
     );

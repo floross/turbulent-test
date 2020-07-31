@@ -1,4 +1,3 @@
-import * as WebSocket from 'ws';
 import { bootstrapServer } from './server';
 
 // Entrypoint of our event reminder application

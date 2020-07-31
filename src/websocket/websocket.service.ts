@@ -17,3 +17,16 @@ export function createWebSocketServer(
     ...(options || {}),
   });
 }
+
+export function broadcastMessage(
+  webSocketServer: WebSocket.Server,
+  message: string | object,
+): void {
+  webSocketServer.clients.forEach((client: WebSocket) => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(
+        typeof message === 'string' ? message : JSON.stringify(message),
+      );
+    }
+  });
+}
