@@ -1,4 +1,4 @@
-import { ERROR_COMMAND_EVENT_EMITTER_BAD_REQUEST } from '../constants/error.constant';
+import { ERROR_COMMAND_EVENT_REMINDER_BAD_REQUEST } from '../constants/error.constant';
 import { CommandMessage } from '../command-message/command-message.interface';
 import {
   EventReminder,
@@ -8,38 +8,41 @@ import { isCommandMessage } from '../command-message/command-message.service';
 
 export const EVENT_REMINDER_COMMAND = 'ADD_EVENT_REMINDER';
 
-export function isEventReminder(commandMessage: CommandMessage): boolean {
-  const reminder = commandMessage.options as EventReminder;
+export function isEventReminder(eventReminder: EventReminder): boolean {
   return (
-    isCommandMessage(commandMessage) &&
-    typeof reminder.name === 'string' &&
-    (typeof reminder.time === 'string' || typeof reminder.time === 'number') &&
-    !isNaN(Number(reminder.time))
+    typeof eventReminder.name === 'string' &&
+    (typeof eventReminder.time === 'string' ||
+      typeof eventReminder.time === 'number') &&
+    !isNaN(Number(eventReminder.time))
   );
+}
+
+export function isEventReminderCommand(
+  commandMessage: CommandMessage,
+): boolean {
+  const reminder = commandMessage.options as EventReminder;
+  return isCommandMessage(commandMessage) && isEventReminder(reminder);
 }
 
 export function parseEventReminder(
   commandMessage: CommandMessage,
-): CommandMessage<EventReminder> {
-  if (!isEventReminder(commandMessage))
+): EventReminder {
+  if (!isEventReminderCommand(commandMessage))
     throw new Error(
-      `${ERROR_COMMAND_EVENT_EMITTER_BAD_REQUEST}: Fail to parse add event emitter options`,
+      `${ERROR_COMMAND_EVENT_REMINDER_BAD_REQUEST}: Fail to parse add event emitter options`,
     );
 
-  return commandMessage as CommandMessage<EventReminder>;
+  return commandMessage.options as EventReminder;
 }
 
 export function addEventReminder(
-  eventReminderCommand: CommandMessage<EventReminder>,
+  eventReminder: EventReminder,
   eventReminderHandler: EventReminderHandler,
 ): void {
-  if (!isEventReminder(eventReminderCommand))
+  if (!isEventReminder(eventReminder))
     throw new Error(
-      `${ERROR_COMMAND_EVENT_EMITTER_BAD_REQUEST}: Fail to parse add event emitter options`,
+      `${ERROR_COMMAND_EVENT_REMINDER_BAD_REQUEST}: Fail to parse add event emitter options`,
     );
-
-  const eventReminder = eventReminderCommand.options as EventReminder;
-
   setTimeout(
     () => eventReminderHandler(eventReminder),
     Number(eventReminder.time),

@@ -1,22 +1,33 @@
-import { ERROR_COMMAND_EVENT_EMITTER_BAD_REQUEST } from '../src/constants/error.constant';
+import 'jest-extended';
+
+import { ERROR_COMMAND_EVENT_REMINDER_BAD_REQUEST } from '../src/constants/error.constant';
 import {
   isEventReminder,
   EVENT_REMINDER_COMMAND,
   parseEventReminder,
   addEventReminder,
+  isEventReminderCommand,
 } from '../src/event-reminder/event-reminder.service';
 
 describe('Event reminder parser Service', () => {
   test('isEventReminder: assert EventReminder format', () => {
     // expect to be the EventReminder format
+    expect(isEventReminder({ name: 'foo', time: '123' })).toBe(true);
+    expect(isEventReminder({ name: 'foo', time: 123 })).toBe(true);
+
+    // Verify if other format does not work
+    expect(isEventReminder({ name: 'foo', time: 'bar' })).toBe(false);
+  });
+  test('isEventReminderCommand: assert EventReminderCommand format', () => {
+    // expect to be the EventReminder format
     expect(
-      isEventReminder({
+      isEventReminderCommand({
         command: EVENT_REMINDER_COMMAND,
         options: { name: 'foo', time: '123' },
       }),
     ).toBe(true);
     expect(
-      isEventReminder({
+      isEventReminderCommand({
         command: EVENT_REMINDER_COMMAND,
         options: { name: 'foo', time: 123 },
       }),
@@ -24,49 +35,43 @@ describe('Event reminder parser Service', () => {
 
     // Verify if other format does not work
     expect(
-      isEventReminder({
+      isEventReminderCommand({
         command: EVENT_REMINDER_COMMAND,
         options: { name: 'foo', time: 'bar' },
       }),
     ).toBe(false);
     expect(
-      isEventReminder({
+      isEventReminderCommand({
         command: EVENT_REMINDER_COMMAND,
         options: { foo: 'foo', time: 123 },
       }),
     ).toBe(false);
     expect(
-      isEventReminder({
+      isEventReminderCommand({
         command: EVENT_REMINDER_COMMAND,
         options: { name: 'foo', bar: 123 },
       }),
     ).toBe(false);
   });
 
-  test('parseCommandMessage: parse a string message to a EventReminder object', () => {
+  test('parseCommandMessage: parse a string message to an EventReminder object', () => {
     // expect to be the EventReminder format
     expect(
       parseEventReminder({
         command: EVENT_REMINDER_COMMAND,
         options: { name: 'foo', time: '123' },
       }),
-    ).toEqual({
-      command: EVENT_REMINDER_COMMAND,
-      options: { name: 'foo', time: '123' },
-    });
+    ).toEqual({ name: 'foo', time: '123' });
     expect(
       parseEventReminder({
         command: EVENT_REMINDER_COMMAND,
         options: { name: 'foo', time: 123 },
       }),
-    ).toEqual({
-      command: EVENT_REMINDER_COMMAND,
-      options: { name: 'foo', time: 123 },
-    });
+    ).toEqual({ name: 'foo', time: 123 });
 
     // Verify if other format does not work
     const errorRegex = new RegExp(
-      `^${ERROR_COMMAND_EVENT_EMITTER_BAD_REQUEST}.*`,
+      `^${ERROR_COMMAND_EVENT_REMINDER_BAD_REQUEST}.*`,
     );
     expect(() =>
       parseEventReminder({
@@ -90,13 +95,7 @@ describe('Event reminder parser Service', () => {
 
   test('addEventReminder: call a function after a time with the event reminder informations', (done) => {
     const callback = jest.fn();
-    addEventReminder(
-      {
-        command: EVENT_REMINDER_COMMAND,
-        options: { name: 'foo', time: '1000' },
-      },
-      callback,
-    );
+    addEventReminder({ name: 'foo', time: '1000' }, callback);
 
     setTimeout(() => {
       expect(callback.mock.calls.length).toBe(1);
@@ -108,17 +107,11 @@ describe('Event reminder parser Service', () => {
   test('addEventReminder: check that the addEventEmitter is not execute with bad arguments', (done) => {
     // Verify if other format does not work
     const errorRegex = new RegExp(
-      `^${ERROR_COMMAND_EVENT_EMITTER_BAD_REQUEST}.*`,
+      `^${ERROR_COMMAND_EVENT_REMINDER_BAD_REQUEST}.*`,
     );
     const callback = jest.fn();
     expect(() =>
-      addEventReminder(
-        {
-          command: EVENT_REMINDER_COMMAND,
-          options: { name: 'foo', time: 'Wrong Value' },
-        },
-        callback,
-      ),
+      addEventReminder({ name: 'foo', time: 'Wrong Value' }, callback),
     ).toThrowWithMessage(Error, errorRegex);
 
     setTimeout(() => {
