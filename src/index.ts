@@ -3,7 +3,7 @@ import { createWebSocketServer } from './websocket/server';
 import { parseCommandMessage } from './command-message/command-message';
 
 // Entrypoint of our event reminder application
-async function eventReminderBootstrap() {
+async function eventReminderBootstrap(): Promise<void> {
   const webSocketServer = createWebSocketServer();
 
   webSocketServer.on('connection', (ws: WebSocket) => {

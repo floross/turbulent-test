@@ -21,7 +21,7 @@ module.exports = {
   // collectCoverageFrom: undefined,
 
   // The directory where Jest should output its coverage files
-  coverageDirectory: "coverage",
+  coverageDirectory: 'coverage',
 
   // An array of regexp pattern strings used to skip coverage collection
   // coveragePathIgnorePatterns: [
@@ -69,10 +69,7 @@ module.exports = {
   // ],
 
   // An array of file extensions your modules use
-  moduleFileExtensions: [
-    "ts",
-    "js"
-  ],
+  moduleFileExtensions: ['ts', 'js'],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   // moduleNameMapper: {},
@@ -122,7 +119,7 @@ module.exports = {
   // setupFiles: [],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  "setupFilesAfterEnv": ["jest-extended"],
+  setupFilesAfterEnv: ['jest-extended'],
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.
   // slowTestThreshold: 5,
@@ -131,7 +128,7 @@ module.exports = {
   // snapshotSerializers: [],
 
   // The test environment that will be used for testing
-  testEnvironment: "node",
+  testEnvironment: 'node',
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},
@@ -151,7 +148,7 @@ module.exports = {
   // ],
 
   // The regexp pattern or array of patterns that Jest uses to detect test files
-  "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+  testRegex: '(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$',
 
   // This option allows the use of a custom results processor
   // testResultsProcessor: undefined,
@@ -166,8 +163,8 @@ module.exports = {
   // timers: "real",
 
   // A map from regular expressions to paths to transformers
-  "transform": {
-    ".(ts|tsx)": "ts-jest"
+  transform: {
+    '.(ts|tsx)': 'ts-jest',
   },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation

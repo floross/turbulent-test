@@ -13,5 +13,10 @@
   "rules": {
     "no-console": 1,
     "prettier/prettier": 2
+  },
+  "env": {
+    "node": true,
+    "jest": true,
+    "commonjs": true
   }
 }

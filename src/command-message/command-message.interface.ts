@@ -1,4 +1,4 @@
 export interface CommandMessage {
   command: string;
-  options?: any;
+  options?: unknown;
 }

@@ -3,6 +3,18 @@ import WebSocket from 'ws';
 import { ERROR_COMMAND_BAD_REQUEST } from '../constants/error.constant';
 import { CommandMessage } from './command-message.interface';
 
+/**
+ * Check if the param implement the CommandMessage interface
+ * @param commandMessage the variable to check
+ */
+export function isCommandMessage(commandMessage: unknown): boolean {
+  return (
+    commandMessage &&
+    typeof commandMessage === 'object' &&
+    typeof (commandMessage as CommandMessage).command === 'string'
+  );
+}
+
 export function parseCommandMessage(message: WebSocket.Data): CommandMessage {
   // For this exemple we will not support messages that are not a string
   if (typeof message !== 'string')
@@ -27,15 +39,4 @@ export function parseCommandMessage(message: WebSocket.Data): CommandMessage {
     );
 
   return parsedMessage as CommandMessage;
-}
-
-/**
- * Check if the param implement the CommandMessage interface
- * @param commandMessage the variable to check
- */
-export function isCommandMessage(commandMessage: any): boolean {
-  return (
-    typeof commandMessage === 'object' &&
-    typeof commandMessage?.command === 'string'
-  );
 }
