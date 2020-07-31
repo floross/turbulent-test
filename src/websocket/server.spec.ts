@@ -52,6 +52,7 @@ describe('Websocket server', () => {
     websocketClient.on('open', () => {
       clearTimeout(errorTimout);
       expect(websocketClient.readyState).toBe(WebSocket.OPEN);
+      websocketClient.terminate();
       webSocketServer.close(done);
     });
   });
