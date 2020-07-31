@@ -1,4 +1,7 @@
-import { createWebSocketServer, WEBSOCKET_DEFAULT_PORT } from './server';
+import {
+  createWebSocketServer,
+  WEBSOCKET_DEFAULT_PORT,
+} from './server.service';
 import WebSocket from 'ws';
 
 describe('Websocket server', () => {

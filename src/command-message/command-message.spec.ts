@@ -1,4 +1,7 @@
-import { isCommandMessage, parseCommandMessage } from './command-message';
+import {
+  isCommandMessage,
+  parseCommandMessage,
+} from './command-message.service';
 import { ERROR_COMMAND_BAD_REQUEST } from '../constants/error.constant';
 
 describe('Command message parser', () => {
