@@ -1,17 +1,66 @@
-# 🧰 Simple TypeScript Starter | 2020
+# Turbulent Test
 
-> We talk about a lot of **advanced Node.js and TypeScript** concepts on [the blog](https://khalilstemmler.com), particularly focused around Domain-Driven Design and large-scale enterprise application patterns. However, I received a few emails from readers that were interested in seeing what a basic TypeScript starter project looks like. So I've put together just that.
+Start an event reminder WebSocket server. Any client can connect and send formatted command to the server. The event reminder command lets add an event and define a time in milliseconds after which all connected clients are informed of the event reached time.
 
-### Scripts
+## Startup
+
+Without any configuration the website will listen on the `8999` port. That can be changed in the configuration or with the env `TURBULENT_WS_PORT`. No console message is displayed to acknowledge the good start.
+
+## Message Command Format
+
+```json
+{
+    "command": "COMMAND_NAME",
+    "options": {}
+}
+```
+## Event Reminder Command Format
+
+```json
+{
+    "command": "ADD_EVENT_REMINDER",
+    "options": {
+        "name": "EventName",
+        "time": 1000
+    }
+}
+```
+| `time` is in milliseconds
+
+All the message from the client must be stringify elsewhere the client will be notified by an error.
+
+## Scripts
 
 #### `npm run start:dev`
 
 Starts the application in development using `nodemon` and `ts-node` to do hot reloading.
 
-#### `npm run build`
+#### `npm run lint`
 
-Builds the app at `build`, cleaning the folder first.
+Lint the entire project
 
-#### `npm run start`
+#### `npm run prettier-format`
 
-Starts the app in production by first building the project with `npm run build`, and then executing the compiled JavaScript at `build/index.js`.
+Format all the files in the project
+
+#### `npm run prettier-watch`
+
+Format a file afther it has beem save
+
+#### `npm run test`
+
+Start the project tests
+
+#### `npm run coverage`
+
+Start the project tests and display the test coverage
+
+## Improuvment
+
+We can easily improve this project by adding some tests and some overall management like configuration.
+
+Furthermore, nothing has been done for the compilation and the deployment (like a Dockerfile) and we could add some documentation too.
+
+-----
+
+| @Credits for the starter kit: `stemmlerjs/simple-typescript-starter`
